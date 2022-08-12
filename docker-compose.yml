@@ -1,0 +1,43 @@
+version: "3.8"
+
+services:
+  db:
+    image: mysql:5.7
+    command: --character-set-server=utf8mb4
+    environment:
+      MYSQL_USER: dbuser
+      MYSQL_PASSWORD: dbpass
+      MYSQL_ROOT_PASSWORD: dbpass
+      MYSQL_DATABASE: bookreview_development
+    volumes:
+      - ./dump:/docker-entrypoint-initdb.d
+  web: &web_base
+    tty: true
+    stdin_open: true
+    command: sh /docker-entrypoint.sh
+    build: ./docker/web
+    links:
+      - db
+      - redis
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app:cached
+      - bundle_caches:/app/vendor/bundle
+    environment:
+      HOST: localhost
+      PORT: 3000
+      DB_USER: root
+      DB_PASSWORD: dbpass
+      DB_HOST: db
+      DB_PORT: 3306
+      REDIS_URL: redis://redis:6379
+      REDIS_ENDPOINT: redis:6379
+  worker:
+    <<: *web_base
+    command: sh /docker-entrypoint-worker.sh
+    ports: []
+  redis:
+    image: redis
+volumes:
+  bundle_caches:
