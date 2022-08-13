@@ -1,0 +1,45 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will download a prebuilt Ruby version, install dependencies and run tests with Rake
+# For more information see: https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
+
+name: Ruby
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  CI:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        # os: [ubuntu-latest, macos-latest]
+        # Due to https://github.com/actions/runner/issues/849, we have to use quotes for '3.1.2'
+        # ruby: ['2.7', '3.1.2', head, jruby, jruby-head, truffleruby, truffleruby-head]
+        ruby: ["3.1.2"]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Dependencies Ruby
+        # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
+        # change this to (see https://github.com/ruby/setup-ruby#versioning):
+        # uses: ruby/setup-ruby@v1
+        # 473e4d8fe5dd94ee328fdfca9f8c9c7afc9dae5e
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+          # ruby-version: '3.1.2.0'
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+      - name: Rubocop
+        run: bundle exec rubocop
+      # - name: Brakeman
+      #   run: bundle exec brakeman -z -q
+      # - name: Rspec
+      #   run: bundle exec rspec
