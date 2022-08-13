@@ -1,0 +1,48 @@
+<% provide :description, "Ngày đó chở theo ánh mắt trong trẻo nhìn cuộc đời không một chút hoài nghi, thế giới trong đồng tử của một đứa trẻ con bao giờ cũng đẹp tuyệt." %>
+
+<div class="container">
+  <%= image_tag("avatar.jpg", alt: "logo", class: "logo") %>
+  <div class="left">
+    <div class="background-rotate">
+      <div class="bg-rotate"></div>
+    </div>
+    <div class="list-left">
+      <div class="group" id="group_item_0"></div>
+      <div class="group" id="group_item_1"></div>
+      <div class="group" id="group_item_2"></div>
+    </div>
+  </div>
+  <div class="right">
+    <p align="center">
+      <img
+        src="https://readme-typing-svg.herokuapp.com?color=%2336BCF7&center=true&vCenter=true&lines=Hi,I'm+Hao+Truong!;Ruby+Developer+from+Viet+Nam;Nice+to+meet+you...!"
+      />
+    </p>
+    <p align="center">
+      <%= image_tag("Developer.gif",alt: "image dev") %>
+    </p>
+  </div>
+  <div class="menu">
+    <ul>
+      <li class="cursor">
+        <%= link_to "https://www.facebook.com/haotv03/", target: "_blank" do %>
+          <img src="<%= asset_path("icons/fb.svg") %>" alt="icon-fb">
+        <% end %>
+      <li class="cursor">
+        <%= link_to "https://www.linkedin.com/in/haotv03/", target: "_blank" do %>
+          <img src="<%= asset_path("icons/linkedin.svg") %>" alt="icon-linkedin">
+        <% end %>
+      </li>
+      <li class="cursor">
+        <%= link_to "https://github.com/haotruong2204", target: "_blank" do %>
+          <img src="<%= asset_path("icons/github.svg") %>" alt="icon-github">
+        <% end %>
+      </li>
+      <li class="cursor">
+        <%= link_to skill_path do %>
+          <img src="<%= asset_path("icons/terminal.svg") %>" alt="icon-terminal">
+        <% end %>
+      </li>
+    </ul>
+  </div>
+</div>
